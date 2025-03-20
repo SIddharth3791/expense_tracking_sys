@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from datetime import date
 from typing import  List
-
 from backend.model.expense import Expense
 from backend.service import expense_service
 
