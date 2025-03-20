@@ -27,12 +27,14 @@ def fetch_expense_summary(start_exp_date: date, end_exp_date: date):
     # Count Total Expense
     total_exp = sum(exp['total'] for exp in exp_summary.summary)
 
-    summary_breakdown={}
+    summary_breakdown={
+        "category" : [],
+        "total" : [],
+        "percentage" : []
+    }
     # Update Each Category With Percentage
     for exp in exp_summary.summary:
-        summary_breakdown[exp['category']] = {
-            "total": exp['total'],
-            "percentage" :  round((exp['total'] * 100) / total_exp, 2)
-        }
-
+        summary_breakdown['category'].append(exp['category'])
+        summary_breakdown['total'].append(exp['total'])
+        summary_breakdown['percentage'].append(round((exp['total'] * 100) / total_exp, 2))
     return summary_breakdown
