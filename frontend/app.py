@@ -2,7 +2,7 @@ import streamlit as st
 from datetime import datetime
 import requests
 
-API_URL="http://localhost:8000"
+API_URL="http://localhost:8000/api"
 categories = ["Rent", "Food", "Shopping", "Entertainment", "Other"]
 st.title("Expense Management System")
 tab1, tab2 = st.tabs(["Add/Update", "Analytics"])

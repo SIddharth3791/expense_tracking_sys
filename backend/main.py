@@ -1,10 +1,13 @@
-# from fastapi import FastAPI
-# from datetime import date
-#
-# from repositories import expenses_repository
-#
-# app = FastAPI()
-#
-# @app.get("/expense/{expense_date}")
-# def fetch_expense_date(expense_date:date):
-#     return expenses_repository.fetch_expenses_by_date(expense_date)
+from fastapi import FastAPI
+from backend.api import expense_mgmt_api, expense_analytic_api
+
+
+app = FastAPI()
+
+#Routes
+app.include_router(expense_mgmt_api.router, prefix="/api", tags=["Expense_mgmt"])
+app.include_router(expense_analytic_api.router, prefix="/api", tags=["Expense_analytic"])
+
+@app.get("/")
+def root():
+    return {"Message": "Welcome to Expense Tracking Application"}
