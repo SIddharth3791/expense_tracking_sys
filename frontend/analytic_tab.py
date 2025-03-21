@@ -6,7 +6,7 @@ import requests
 API_URL="http://localhost:8000/api"
 categories = ["Rent", "Food", "Shopping", "Entertainment", "Other"]
 
-def get_summary():
+def get_summary_category():
     col1, col2 = st.columns(2)
     with col1:
         start_date = st.date_input("Start Date", datetime(2024, 8, 1))
@@ -14,7 +14,7 @@ def get_summary():
         end_date = st.date_input("End Date", datetime(2024, 8, 10))
 
     if st.button("Get Analytic"):
-        summary_response = requests.get(url=f"{API_URL}/summary/{start_date}/{end_date}")
+        summary_response = requests.get(url=f"{API_URL}/summary/category/{start_date}/{end_date}")
 
         if summary_response.status_code == 200:
             summary_data = summary_response.json()
@@ -25,4 +25,4 @@ def get_summary():
             st.title("Expense Break Down By Category")
             st.bar_chart(data=summary_df_sorted.set_index("category")['percentage'])
 
-            st.table(summary_df_sorted)
+            st.table(summary_df_sorted.set_index('category'))

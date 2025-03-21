@@ -23,7 +23,8 @@ def add_or_update_expense_data(expense_date: date , expenses:List[Expense] ):
         return f"Error While Saving Expenses {err}"
 
 def fetch_expense_summary(start_exp_date: date, end_exp_date: date):
-    exp_summary = ExpenseSummary(summary=expense_repository.fetch_expense_summary(start_exp_date,end_exp_date))
+    db_data_summary = expense_repository.fetch_expense_summary(start_exp_date,end_exp_date)
+    exp_summary = ExpenseSummary(summary=db_data_summary)
     # Count Total Expense
     total_exp = sum(exp['total'] for exp in exp_summary.summary)
 
@@ -38,3 +39,6 @@ def fetch_expense_summary(start_exp_date: date, end_exp_date: date):
         summary_breakdown['total'].append(exp['total'])
         summary_breakdown['percentage'].append(round((exp['total'] * 100) / total_exp, 2))
     return summary_breakdown
+
+def fetch_summary_by_months():
+    return expense_repository.fetch_expense_summary_by_month()

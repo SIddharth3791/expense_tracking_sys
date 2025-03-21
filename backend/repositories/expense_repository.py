@@ -39,3 +39,19 @@ def fetch_expense_summary(start_exp_date, end_exp_date):
 
         summary_data = cursor.fetchall()
         return summary_data
+
+def fetch_expense_summary_by_month():
+    with db_connection_cursor() as cursor:
+        cursor.execute(
+            '''
+            SELECT 
+                DATE_FORMAT(expense_date, '%M') AS month_name,   -- 'August'
+                DATE_FORMAT(expense_date, '%Y') AS year_number,  -- '2024'
+                sum(amount) as total
+            FROM expenses 
+            GROUP BY month_name, year_number
+            ORDER BY STR_TO_DATE(CONCAT(month_name, ' ', year_number), '%M %Y');
+            '''
+        )
+        monthly_summary = cursor.fetchall()
+        return monthly_summary
